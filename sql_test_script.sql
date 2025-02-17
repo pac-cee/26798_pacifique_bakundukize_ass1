@@ -9,20 +9,17 @@ alter session set container=CDB$ROOT;
 -- Additional notes: Ensure the accuracy of the SQL commands previously executed.
 -- Last Updated: 2023-10-12  -- Updated the last modified date after the recent changes
 -- Next Steps: Review and validate SQL commands for correctness and efficiency.
---------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
-PS D:\VScode\DATBASE\DB Dev PL SQL> docker exec -it oracle-free bash                                                                 
-bash-4.4$ sqlplus / as sysdba
+--SQL*Plus: Release 23.0.0.0.0 - Production on Mon Feb 17 06:27:11 2025
+--Version 23.6.0.24.10
 
-SQL*Plus: Release 23.0.0.0.0 - Production on Mon Feb 17 06:27:11 2025
-Version 23.6.0.24.10
-
-Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+--Copyright (c) 1982, 2024, Oracle.  All rights reserved.
 
 
-Connected to:
-Oracle Database 23ai Free Release 23.0.0.0.0 - Develop, Learn, and Run for Free
-Version 23.6.0.24.10
+--Connected to:
+--Oracle Database 23ai Free Release 23.0.0.0.0 - Develop, Learn, and Run for Free
+--Version 23.6.0.24.10
 
 SQL> show con
 concat "." (hex 2e)
@@ -916,6 +913,196 @@ Modern Poetry Collection
 
 
 8 rows selected.
+
+
+   BOOK_ID TITLE                           CATEGORY_NAME       
+  PRICE    RATING
+__________ _______________________________ __________________ ________ _________
+         1 The Oracle at Delphi            Technology          
+  29.99       4.5
+         3 History of Rome                 Biography           
+  24.99       4.3
+         2 Learning SQL                    History             
+  39.99       4.7
+         4 Database Design Fundamentals    Self-Help           
+  45.99       4.8
+         5 Steve Jobs: The Biography       Poetry              
+   35.5       4.9
+         6 World War II Chronicles         Mystery             
+  55.99       4.6
+         7 Mindfulness in Practice         Science Fiction       29.99       4.2
+         8 Modern Poetry Collection        Non-Fiction         
+  19.99         4
+
+8 rows selected.
+
+
+   BOOK_ID TITLE                           CATEGORY_NAME       
+  PRICE    RATING
+__________ _______________________________ __________________ ________ _________
+         1 The Oracle at Delphi            Technology          
+  29.99       4.5
+         3 History of Rome                 Biography           
+  24.99       4.3
+         2 Learning SQL                    History             
+  39.99       4.7
+         4 Database Design Fundamentals    Self-Help           
+  45.99       4.8
+         5 Steve Jobs: The Biography       Poetry              
+   35.5       4.9
+         6 World War II Chronicles         Mystery             
+  55.99       4.6
+         7 Mindfulness in Practice         Science Fiction       29.99       4.2
+         8 Modern Poetry Collection        Non-Fiction         
+  19.99         4
+
+8 rows selected.
+
+
+   LOAN_ID    BOOK_ID    MEMBER_ID LOAN_DATE    RETURN_DATE    CREATED_AT
+__________ __________ ____________ ____________ ______________ _____________
+         1          1            1 15-FEB-25                   
+15-FEB-25
+         2          2            1 11-FEB-25    16-FEB-25      11-FEB-25
+         4          1            2 16-FEB-25                   
+16-FEB-25
+         5          2            1 16-FEB-25                   
+16-FEB-25
+         6          4            3 14-FEB-25                   
+14-FEB-25
+         7          5            3 12-FEB-25    16-FEB-25      12-FEB-25
+        12          2            5 13-FEB-25                   
+13-FEB-25
+        13          3            6 16-FEB-25                   
+16-FEB-25
+        14          4            6 17-FEB-25                   
+17-FEB-25
+
+9 rows selected.
+
+
+   LOAN_ID    BOOK_ID    MEMBER_ID LOAN_DATE    RETURN_DATE    CREATED_AT
+__________ __________ ____________ ____________ ______________ _____________
+         1          1            1 15-FEB-25                   
+15-FEB-25
+         2          2            1 11-FEB-25    16-FEB-25      11-FEB-25
+         4          1            2 16-FEB-25                   
+16-FEB-25
+         5          2            1 16-FEB-25                   
+16-FEB-25
+         6          4            3 14-FEB-25                   
+14-FEB-25
+         7          5            3 12-FEB-25    16-FEB-25      12-FEB-25
+        12          2            5 13-FEB-25                   
+13-FEB-25
+        13          3            6 16-FEB-25                   
+16-FEB-25
+        14          4            6 17-FEB-25                   
+17-FEB-25
+
+9 rows selected.
+
+
+   BOOK_ID TITLE                              CATEGORY_ID    PRICE    RATING
+__________ _______________________________ ______________ ________ _________
+         1 The Oracle at Delphi                         1    29.99       4.5
+         3 History of Rome                              2    24.99       4.3
+         2 Learning SQL                                 3    39.99       4.7
+         4 Database Design Fundamentals                 4    45.99       4.8
+         5 Steve Jobs: The Biography                    5     35.5       4.9
+         6 World War II Chronicles                      6    55.99       4.6
+         7 Mindfulness in Practice                      7    29.99       4.2
+         8 Modern Poetry Collection                     8    19.99         4
+
+8 rows selected.
+
+
+   BOOK_ID TITLE                              CATEGORY_ID    PRICE    RATING
+__________ _______________________________ ______________ ________ _________
+         1 The Oracle at Delphi                         1    29.99       4.5
+         3 History of Rome                              2    24.99       4.3
+         2 Learning SQL                                 3    39.99       4.7
+         4 Database Design Fundamentals                 4    45.99       4.8
+         5 Steve Jobs: The Biography                    5     35.5       4.9
+         6 World War II Chronicles                      6    55.99       4.6
+         7 Mindfulness in Practice                      7    29.99       4.2
+         8 Modern Poetry Collection                     8    19.99         4
+
+8 rows selected.
+
+
+   MEMBER_ID NAME           TOTAL_LOANS 
+____________ ___________ ______________
+           1 John Doe                 4
+
+
+   MEMBER_ID NAME           TOTAL_LOANS
+____________ ___________ ______________
+           1 John Doe                 4
+
+
+   BOOK_ID TITLE                      PUBLICATION_YEAR    CATEGORY_ID    PRICE    RATING
+__________ _______________________ ___________________ ______________ ________ _________
+         1 The Oracle at Delphi                   2018         
+     1    29.99       4.5
+         2 Learning SQL                           2020         
+     3    39.99       4.7
+         3 History of Rome                        2015         
+     2    24.99       4.3
+
+
+   MEMBER_ID NAME        EMAIL                      LOAN_COUNT 
+____________ ___________ _______________________ _____________ 
+           1 John Doe    john.doe@example.com                4 
+
+
+no rows selected
+
+   MEMBER_ID NAME        TITLE                   LOAN_DATE    RETURN_DATE    LOAN_STATUS
+____________ ___________ _______________________ ____________ ______________ ______________
+           1 John Doe    History of Rome         09-FEB-25    14-FEB-25      Returned
+           1 John Doe    Learning SQL            11-FEB-25    16-FEB-25      Returned
+           1 John Doe    The Oracle at Delphi    15-FEB-25                   Active
+           1 John Doe    Learning SQL            16-FEB-25                   Active
+
+
+   MEMBER_ID NAME        TITLE                   LOAN_DATE    RETURN_DATE    LOAN_STATUS
+____________ ___________ _______________________ ____________ ______________ ______________
+           1 John Doe    History of Rome         09-FEB-25    14-FEB-25      Returned
+           1 John Doe    Learning SQL            11-FEB-25    16-FEB-25      Returned
+           1 John Doe    The Oracle at Delphi    15-FEB-25                   Active
+           1 John Doe    Learning SQL            16-FEB-25                   Active
+
+
+Savepoint created.
+
+
+1 row inserted.
+
+
+Commit complete.
+
+
+Commit complete.
+
+
+Savepoint created.
+
+
+1 row deleted.
+
+
+Rollback complete.
+
+
+Commit complete.
+
+
+Commit complete.
+
+SQL>
+
+
 
 SQL> commit;
 
