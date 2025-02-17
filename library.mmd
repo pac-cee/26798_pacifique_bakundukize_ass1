@@ -1,0 +1,43 @@
+erDiagram
+    BOOK {
+      int BookID PK
+      string Title
+      string ISBN
+      int PublicationYear
+      int PublisherID FK
+    }
+    AUTHOR {
+      int AuthorID PK
+      string FirstName
+      string LastName
+    }
+    PUBLISHER {
+      int PublisherID PK
+      string Name
+      string Address
+    }
+    MEMBER {
+      int MemberID PK
+      string FirstName
+      string LastName
+      string Email
+      string PhoneNumber
+    }
+    LOAN {
+      int LoanID PK
+      int BookID FK
+      int MemberID FK
+      date LoanDate
+      date DueDate
+      date ReturnDate
+    }
+    BOOK_AUTHOR {
+      int BookID PK, FK
+      int AuthorID PK, FK
+    }
+    
+    PUBLISHER ||--o{ BOOK : "publishes"
+    BOOK ||--o{ LOAN : "is borrowed in"
+    MEMBER ||--o{ LOAN : "has loan"
+    BOOK ||--o{ BOOK_AUTHOR : "has"
+    AUTHOR ||--o{ BOOK_AUTHOR : "writes"
