@@ -1,36 +1,50 @@
-# Library Management System - README
+# Library Management System
+
+## Table of Contents
+1. [Introduction](#1-introduction)
+2. [Problem Statement](#2-problem-statement)
+3. [Database Schema](#3-database-schema)
+4. [Implementation Details](#4-implementation-details)
+5. [Query Examples](#5-query-examples)
+6. [Testing and Results](#6-testing-and-results)
+7. [Setup and Installation](#7-setup-and-installation)
+8. [Conclusion](#8-conclusion)
 
 ## 1. Introduction
 
-    NAME:PACIFIQUE BAKUNDUKIZE
-      STUDENT_ID: 26798
-      PLUGGABLE DATABASE NAME : PDB26798
-This README provides a**detailed** overview of the Library Management System project, describing:
+**Project Information**
+- **Name**: Pacifique Bakundukize
+- **Student ID**: 26798
+- **Specialization**: Software Engineering
+- **Database**: Oracle PDB (PDB26798)
 
-1. The **problem statement** and the purpose of the system.
-2. The **database schema**, including relationships and constraints.
-3. The **SQL commands** executed (DDL, DCL, DML, TCL) and what each set of commands accomplishes.
-4. **Sample queries**, their **results**, and how they address common library requirements.
-5. **Transaction control** demonstrations using `SAVEPOINT`, `ROLLBACK`, and `COMMIT`.
-6. **Screenshots** references (conceptual diagram, SQL query results, etc.) and **explanations** of outputs.
+This document provides comprehensive documentation for a Library Management System implemented using Oracle Database. The system demonstrates advanced database concepts including:
 
----
+- Relational database design
+- Complex SQL queries
+- Transaction management
+- Access control
+- Data integrity constraints
 
 ## 2. Problem Statement
 
-A library typically manages:
+### 2.1 Overview
+Modern libraries require robust systems to manage their resources efficiently. This system addresses the following core requirements:
 
-- **Books** in different categories (e.g., Technology, Biography, History, etc.).
-- **Authors** of those books, with the possibility that a book can have multiple authors (and an author can write multiple books).
-- **Members** who borrow books, each having a profile with address and phone details.
-- **Loan transactions** tracking which member borrowed which book, along with loan and return dates.
+### 2.2 Key Requirements
+- Book inventory management across multiple categories
+- Author management with support for multiple authors per book
+- Member profile management
+- Loan transaction tracking
+- Data integrity and consistency maintenance
 
-**Goal:**
-Build a robust, relational database system in Oracle that captures these entities, enforces data integrity via constraints, and provides queries to retrieve insightful information about books, members, and loans. The system must also demonstrate how to manage transactions safely using Oracle’s transaction control features.
+### 2.3 Business Rules
+- Books can belong to multiple categories
+- Books can have multiple authors
+- Members can borrow multiple books
+- Each loan must track both issue and return dates
 
----
-
-## 3. Database Schema Overview
+## 3. Database Schema
 
 Below is a summary of the **entities** (tables) and their relationships:
 
@@ -77,13 +91,11 @@ Below is a summary of the **entities** (tables) and their relationships:
 
 Here is the conceptual diagram illustrating the tables, their attributes, and relationships:
 
-![Conceptual Diagram]('/conceptual_diagram.png')
+![Conceptual Diagram](./conceptual_diagram.png)
 
 > *Screenshot 1: Conceptual ER diagram showing tables, primary keys, foreign keys, and relationships.*
 
----
-
-## 4. SQL Scripts
+## 4. Implementation Details
 
 All SQL commands are organized into **DDL**, **DCL**, **DML**, **TCL**, and **Queries**. They can be run in a single script or split across multiple files (e.g., `schema.sql`, `data.sql`, `queries.sql`, etc.).
 
@@ -215,210 +227,101 @@ VALUES (3, 2, SYSDATE, NULL, SYSDATE);
 COMMIT;
 ```
 
----
+## 5. Query Examples
 
-## 5. Queries and Explanations
-
-Below are **key queries** demonstrating how the data can be retrieved and analyzed. Some sample results are included in screenshots.
-
-1. **Retrieve All Books with Category Names**
-
-   ```sql
-   SELECT b.book_id,
-          b.title,
-          c.category_name,
-          b.price,
-          b.rating
-   FROM Books b
-   LEFT JOIN Categories c ON b.category_id = c.category_id;
-   ```
-
-   - **Explanation**:
-     - Uses a **LEFT JOIN** to list all books even if a category is not assigned.
-     - Shows how to combine data from two tables for more meaningful output.
-2. **Loans Created in the Past 7 Days**
-
-   ```sql
-   SELECT *
-   FROM Loans
-   WHERE created_at >= SYSDATE - 7;
-   ```
-
-   - **Explanation**:
-     - Filters loans that have `created_at` within the last 7 days.
-     - Useful for weekly transaction reports or overdue checks.
-3. **Top 5 Highest Priced Books per Category**
-
-   ```sql
-   SELECT book_id, title, category_id, price, rating
-   FROM (
-       SELECT b.*,
-              ROW_NUMBER() OVER (PARTITION BY b.category_id ORDER BY b.price DESC) AS rn
-       FROM Books b
-   ) 
-   WHERE rn <= 5;
-   ```
-
-   - **Explanation**:
-     - Uses **analytic functions** (`ROW_NUMBER()`) partitioned by category to rank books in descending order by price.
-     - Retrieves the top 5 per category.
-4. **Members with More Than 3 Loan Transactions**
-
-   ```sql
-   SELECT m.member_id, m.name, COUNT(l.loan_id) AS total_loans
-   FROM Members m
-   JOIN Loans l ON m.member_id = l.member_id
-   GROUP BY m.member_id, m.name
-   HAVING COUNT(l.loan_id) > 3;
-   ```
-
-   - **Explanation**:
-     - Groups loans by member to count how many times each member has borrowed.
-     - Filters out only those with `COUNT(l.loan_id) > 3`.
-5. **Books Loaned by Members with a Specific Email Domain**
-
-   ```sql
-   SELECT *
-   FROM Books
-   WHERE book_id IN (
-       SELECT DISTINCT l.book_id
-       FROM Loans l
-       JOIN Members m ON l.member_id = m.member_id
-       WHERE m.email LIKE '%@example.com'
-   );
-   ```
-
-   - **Explanation**:
-     - Demonstrates a **subquery** to find books loaned by members whose emails end in `@example.com`.
-6. **Books Loaned More Than 3 Times**
-
-   ```sql
-   SELECT 
-       b.book_id,
+### 5.1 Basic Queries
+```sql
+-- Get all books with their categories
+SELECT b.book_id,
        b.title,
        c.category_name,
-       COUNT(*) AS loan_count
-   FROM Books b
-   JOIN Loans l ON b.book_id = l.book_id
-   JOIN Categories c ON b.category_id = c.category_id
-   GROUP BY b.book_id, b.title, c.category_name
-   HAVING COUNT(*) > 3;
-   ```
+       b.price,
+       b.rating
+FROM Books b
+LEFT JOIN Categories c ON b.category_id = c.category_id;
+```
 
-   - **Explanation**:
-     - Identifies popular books that have been borrowed frequently.
-     - Could inform decisions about purchasing additional copies.
-7. **Detailed View of Transactions for Members with More Than 3 Loans**
+**Purpose**: Retrieves complete book information with categories
+**Use Case**: Book inventory management and reporting
 
-   ```sql
-   SELECT 
-       m.member_id,
-       m.name,
-       b.title,
-       l.loan_date,
-       l.return_date,
-       CASE 
-           WHEN l.return_date IS NULL THEN 'Active'
-           ELSE 'Returned'
-       END AS loan_status
-   FROM Members m
-   JOIN Loans l ON m.member_id = l.member_id
-   JOIN Books b ON l.book_id = b.book_id
-   WHERE m.member_id IN (
-       SELECT member_id
-       FROM Loans
-       GROUP BY member_id
-       HAVING COUNT(*) > 3
-   )
-   ORDER BY m.member_id, l.loan_date;
-   ```
+### 5.2 Advanced Analytics
+```sql
+-- Find popular books (borrowed > 3 times)
+SELECT 
+    b.title,
+    c.category_name,
+    COUNT(*) AS loan_count
+FROM Books b
+JOIN Loans l ON b.book_id = l.book_id
+JOIN Categories c ON b.category_id = c.category_id
+GROUP BY b.book_id, b.title, c.category_name
+HAVING COUNT(*) > 3;
+```
 
-   - **Explanation**:
-     - Combines members, loans, and books to show a complete transaction history for those members with more than 3 loans.
-     - Adds a **computed column** (`loan_status`) indicating whether the loan is still active or returned.
+**Purpose**: Identifies frequently borrowed books
+**Business Impact**: Helps in inventory planning and book procurement
 
----
-
-## 6. Screenshots and Demonstrations
+## 6. Testing and Results
 
 1. **Conceptual Diagram**
 
-   - Shown above (`/conceptual-diagram.png`). As well the codes for it are in ('/library.mmd')
-2. **Open PDB Container**-Show above ('/namechange.png')
+   - Shown above ![Conceptual Diagram](./conceptual_diagram.png). As well the codes for it are in ('/library.mmd')
+2. **Open PDB Container**-Show above ![PDB Container](./namechange.png)
    It's listed in the file name [sql_test_script.sql]
 3. **Query Results**
-   -shown above ('/tablescreated1.png')
-   -shown above ('/tablescreated2.png')
+  ![Tables Created 1](./tablescreated1.png)
+![Tables Created 2](./tablescreated2.png)
 
 # All query results were put in a file name (sql_test_script.sql)#
 
   The file contains all the project work from the beginning till completion of everything, plus it being systematic.
 
----
+## 7. Setup and Installation
 
-## 7. Explanation of Results and Transactions
+### Prerequisites
+- Oracle Database 19c or higher
+- SQL*Plus or Oracle SQL Developer
+- Minimum 500MB storage space
 
-### 7.1 Query Results
+### Installation Steps
+1. **Database Setup**
+   ```sql
+   -- Connect as SYSDBA
+   ALTER SESSION SET CONTAINER = PDB26798;
+   ALTER PLUGGABLE DATABASE PDB26798 OPEN READ WRITE;
+   ```
 
-- **Members with More Than 3 Loans**:
-  - Identifies frequent borrowers, potentially for loyalty programs or membership level upgrades.
-- **Top 5 Highest Priced Books**:
-  - Useful for budgeting or security measures, as these might require special handling.
-- **Loans in the Past 7 Days**:
-  - Assists librarians in monitoring recent activity, overdue returns, or trending titles.
+2. **Schema Creation**
+   ```sql
+   -- Create application user
+   CREATE USER bpacifique26798 IDENTIFIED BY "Euqificap12."
+   QUOTA UNLIMITED ON USERS;
+   ```
 
-### 7.2 Transaction Control
+## 8. Conclusion
 
-- **SAVEPOINT** / **ROLLBACK** / **COMMIT**:
-  - Illustrates how partial changes can be undone if something goes wrong during the insertion or deletion process.
-  - Ensures data consistency by allowing fine-grained control over each transaction.
+### Key Achievements
+- Implemented a fully normalized database design
+- Developed comprehensive transaction management
+- Created efficient queries for common library operations
 
-Example scenario:
-
-1. A user tries to insert a new loan record.
-2. A check reveals the member already has too many active loans.
-3. The system issues a `ROLLBACK TO before_loan` to undo that insertion.
-
-Alternatively, if the insertion is valid, a `COMMIT` finalizes the transaction.
-
----
-
-## 8. How to Run
-
-1. **Connect to Oracle**
-   - Make sure your Oracle database is up and the PDB is open in **READ WRITE** mode.
-   - Example:
-     ```sql
-     ALTER PLUGGABLE DATABASE PDB26798 OPEN READ WRITE;
-     ALTER SESSION SET CONTAINER = PDB26798;
-     ```
-2. **Run the DDL**
-   - Execute the CREATE TABLE statements in the correct order (Categories, Books, Authors, BookAuthors, Members, MemberProfiles, Loans).
-3. **Run the DCL**
-   - Create the user and grant the necessary privileges.
-4. **Run the DML**
-   - Insert sample data for Categories, Books, Authors, BookAuthors, Members, MemberProfiles, Loans.
-   - Optionally run any `UPDATE` or `DELETE` statements.
-5. **Run the Queries**
-   - Verify the data by executing the provided SELECT statements.
-   - Confirm results match expectations.
-6. **Test Transaction Control**
-   - Experiment with `SAVEPOINT`, `ROLLBACK`, and `COMMIT` to ensure partial rollbacks work as intended.
+### Future Enhancements
+- Add support for digital content management
+- Implement fine calculation system
+- Add reporting dashboard
 
 ---
 
-## 9. Conclusion
+## Appendix
 
-This Library Management System showcases:
+### A. Database Diagrams
+![Conceptual Diagram](./conceptual_diagram.png)
+*Figure 1: Entity-Relationship Diagram*
 
-- **Relational design** with **one-to-many**, **many-to-many**, and **one-to-one** relationships.
-- **Data integrity** enforced via primary and foreign key constraints.
-- **User privileges** and best practices in Oracle for controlling data access.
-- **Transaction management** using `SAVEPOINT`, `ROLLBACK`, and `COMMIT` to maintain consistent data states.
-- **Comprehensive queries** to generate meaningful insights (e.g., frequent borrowers, popular books, recent transactions).
+### B. Test Results
+![Query Results](./tablescreated1.png)
+*Figure 2: Sample Query Execution Results*
 
-By following this guide, you can recreate the schema, populate data, and run advanced queries to analyze and manage a typical library’s operational data.
+---
 
-> **Tip**: Always keep backups or version-controlled scripts to restore your database quickly if an error occurs.
-
-**Thank you for exploring this Library Management System!**
+**Repository:** [GitHub Link]
