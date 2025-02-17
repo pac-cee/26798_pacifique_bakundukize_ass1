@@ -91,7 +91,7 @@ Below is a summary of the **entities** (tables) and their relationships:
 
 Here is the conceptual diagram illustrating the tables, their attributes, and relationships:
 
-![Conceptual Diagram](./conceptual_diagram.png)
+![Conceptual Diagram](./conceptual-diagram.png)
 
 > *Screenshot 1: Conceptual ER diagram showing tables, primary keys, foreign keys, and relationships.*
 
@@ -265,13 +265,16 @@ HAVING COUNT(*) > 3;
 
 1. **Conceptual Diagram**
 
-   - Shown above ![Conceptual Diagram](./conceptual_diagram.png). As well the codes for it are in ('/library.mmd')
+   - Shown above ![Conceptual Diagram](./conceptual-diagram.png). As well the codes for it are in ('/library.mmd')
 2. **Open PDB Container**-Show above ![PDB Container](./namechange.png)
    It's listed in the file name [sql_test_script.sql]
 3. **Query Results**
-  ![Tables Created 1](./tablescreated1.png)
+![Query Results](./tablescreated1.png)
+![PDB Container](./namechange.png)
+![Tables Created 1](./tablescreated1.png)
 ![Tables Created 2](./tablescreated2.png)
-
+![PDB open new](./openingnewname.png)
+![PDB running](./showingrunning.png)
 # All query results were put in a file name (sql_test_script.sql)#
 
   The file contains all the project work from the beginning till completion of everything, plus it being systematic.
@@ -315,11 +318,16 @@ HAVING COUNT(*) > 3;
 ## Appendix
 
 ### A. Database Diagrams
-![Conceptual Diagram](./conceptual_diagram.png)
+![Conceptual Diagram](./conceptual-diagram.png)
 *Figure 1: Entity-Relationship Diagram*
 
 ### B. Test Results
 ![Query Results](./tablescreated1.png)
+![PDB Container](./namechange.png)
+![Tables Created 1](./tablescreated1.png)
+![Tables Created 2](./tablescreated2.png)
+![PDB open new](./openingnewname.png)
+![PDB running](./showingrunning.png)
 *Figure 2: Sample Query Execution Results*
 
 ---
