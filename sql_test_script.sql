@@ -28,70 +28,47 @@ SQL> show con_name
 CON_NAME
 ------------------------------
 CDB$ROOT
-SQL> ALTER PLUGGABLE DATABASE FREEPDB1
-  2  CLOSE IMMEDIATE;
+ALTER PLUGGABLE DATABASE PDB26798 CLOSE IMMEDIATE;
 
 Pluggable database altered.
 
 SQL> ALTER PLUGGABLE DATABASE FREEPDB1
-  2  OPEN RESTRICTED;
-
-Pluggable database altered.
-
-SQL> ALTER PLUGGABLE DATABASE FREEPDB1
-  2  RENAME GLOBAL_NAME TO PDB26798;         
+  2  OPEN RESTRICTED;     
+  3  
+SQL> ALTER PLUGGABLE DATABASE PDB26798 OPEN RESTRICTED;
 
 Pluggable database altered.
 
 SQL> ALTER PLUGGABLE DATABASE PDB26798
+  2  RENAME GLOBAL_NAME TO TUE_26798_PDB;
+
+Pluggable database altered.
+
+SQL> ALTER PLUGGABLE DATABASE TUE_26798_PDB
   2  CLOSE;
 
 Pluggable database altered.
 
-SQL> ALTER PLUGGABLE DATABASE PDB26798
+SQL> ALTER PLUGGABLE DATABASE TUE_26798_PDB
   2  OPEN;
 
 Pluggable database altered.
 
-SQL> ALTER PLUGGABLE DATABASE PDB26798 OPEN READ WRITE;
-ALTER PLUGGABLE DATABASE PDB26798 OPEN READ WRITE
-*
-ERROR at line 1:
-ORA-65019: pluggable database PDB26798 already open
-Help: https://docs.oracle.com/error-help/db/ora-65019/
-
-
-SQL> ALTER PLUGGABLE DATABASE PDB26798 
-  2  OPEN READ WRITE;
-ALTER PLUGGABLE DATABASE PDB26798
-*
-ERROR at line 1:
-ORA-65019: pluggable database PDB26798 already open
-Help: https://docs.oracle.com/error-help/db/ora-65019/
-
-
-SQL> ALTER PLUGGABLE DATABASE PDB26798
-  2  READ WRITE;
-READ WRITE
-*
-ERROR at line 2:
-ORA-00922: missing or invalid option
-Help: https://docs.oracle.com/error-help/db/ora-00922/
-
-
-SQL> ALTER SESSION SET CONTAINER = PDB26798;
+SQL> ALTER SESSION SET CONTAINER = TUE_26798_PDB;
 
 Session altered.
 
-SQL> SELECT name, open_mode FROM v$pdbs;
+SQL> SELECT name , open_mode FROM v$pdbs;
 
 NAME
 --------------------------------------------------------------------------------
 OPEN_MODE
 ----------
-PDB26798
+TUE_26798_PDB
 READ WRITE
 
+
+SQL>
 
 SQL> CREATE TABLE Authors (
     AuthorID NUMBER PRIMARY KEY,
