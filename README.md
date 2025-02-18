@@ -16,7 +16,7 @@
 - **Name**: Pacifique Bakundukize
 - **Student ID**: 26798
 - **Specialization**: Software Engineering
-- **Database**: Oracle PDB (PDB26798)
+- **Database**: Oracle PDB (TUE_26798_PDB)
 
 This document provides comprehensive documentation for a Library Management System implemented using Oracle Database. The system demonstrates advanced database concepts including:
 
@@ -104,10 +104,10 @@ All SQL commands are organized into **DDL**, **DCL**, **DML**, **TCL**, and **Qu
 1. **Altering Session**
 
    ```sql
-   ALTER SESSION SET CONTAINER = PDB26798;
+   ALTER SESSION SET CONTAINER = TUE_26798_PDB;
    ```
 
-   - Switches to the pluggable database (`PDB26798`) to ensure all subsequent operations occur in the correct container.
+   - Switches to the pluggable database (`TUE_26798_PDB`) to ensure all subsequent operations occur in the correct container.
 2. **Creating Tables**
 
    ```sql
@@ -298,7 +298,7 @@ HAVING COUNT(*) > 3;
 1. **Database Setup**
    ```sql
    -- Connect as SYSDBA
-   ALTER SESSION SET CONTAINER = PDB26798;
+   ALTER SESSION SET CONTAINER = TUE_26798_PDB;
    ALTER PLUGGABLE DATABASE PDB26798 OPEN READ WRITE;
    ```
 
